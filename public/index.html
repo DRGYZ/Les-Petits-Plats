@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Les Petits Plats</title>
+    <link rel="stylesheet" href="../src/styles/main.css" />
+    <style>
+      /* ensures the "Search recipes" label stays for screen readers only */
+      .sr-only {
+        position: absolute !important;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <img
+        class="hero-bg"
+        src="../public/assets/images/hero.jpg"
+        alt=""
+        aria-hidden="true"
+      />
+      <div class="hero-inner container">
+        <a class="logo" href="#">LES PETITS PLATS</a>
+
+        <h1 class="hero-title">
+          CHERCHEZ PARMI PLUS DE 1500 RECETTES<br />
+          DU QUOTIDIEN, SIMPLES &amp; DÉLICIEUSES
+        </h1>
+
+<form class="hero-search" role="search" onsubmit="return false;">
+  <label for="main-search" class="sr-only">Rechercher des recettes</label>
+  <div class="search-wrapper">
+    <input
+      id="main-search"
+      class="hero-input"
+      type="search"
+      placeholder="Rechercher une recette, un ingrédient, …"
+    />
+    <button class="hero-btn" type="button" aria-label="Rechercher">
+      <!-- White magnifying glass -->
+      <svg xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 24 24" width="27" height="28"
+           fill="none" stroke="white" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+  </div>
+</form>
+
+      </div>
+    </header>
+
+    <!-- Filters row -->
+    <section class="controls container">
+      <div class="selects">
+        <!-- INGREDIENTS -->
+        <details class="dropdown" id="dd-ingredients">
+          <summary>Ingrédients</summary>
+          <div class="dd-panel">
+            <div class="dd-title">Ingrédients</div>
+            <div class="dd-input">
+              <input
+                class="dd-search"
+                type="text"
+                placeholder="Rechercher un ingrédient…"
+              />
+              <button class="dd-clear" type="button" aria-label="Effacer">
+                ×
+              </button>
+            </div>
+            <ul class="dd-list" role="listbox"></ul>
+          </div>
+        </details>
+
+        <!-- APPLIANCES -->
+        <details class="dropdown" id="dd-appliances">
+          <summary>Appareils</summary>
+          <div class="dd-panel">
+            <div class="dd-title">Appareils</div>
+            <div class="dd-input">
+              <input
+                class="dd-search"
+                type="text"
+                placeholder="Rechercher un appareil…"
+              />
+              <button class="dd-clear" type="button" aria-label="Effacer">
+                ×
+              </button>
+            </div>
+            <ul class="dd-list" role="listbox"></ul>
+          </div>
+        </details>
+
+        <!-- USTENSILS -->
+        <details class="dropdown" id="dd-ustensils">
+          <summary>Ustensiles</summary>
+          <div class="dd-panel">
+            <div class="dd-title">Ustensiles</div>
+            <div class="dd-input">
+              <input
+                class="dd-search"
+                type="text"
+                placeholder="Rechercher un ustensile…"
+              />
+              <button class="dd-clear" type="button" aria-label="Effacer">
+                ×
+              </button>
+            </div>
+            <ul class="dd-list" role="listbox"></ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="chips-and-count">
+        <div id="active-tags" class="tags-active"></div>
+        <div class="count" id="results-count">0 recettes</div>
+      </div>
+    </section>
+
+    <main class="slab">
+      <div class="container">
+        <div id="cards" class="cards-grid"></div>
+        <div id="empty" class="empty-state" hidden>
+          Aucune recette ne correspond à votre critère…
+        </div>
+      </div>
+    </main>
+
+    <!-- Data first -->
+    <script src="../src/data/recipes.js" defer></script>
+    <script src="../src/app.js" defer></script>
+  </body>
+</html>
