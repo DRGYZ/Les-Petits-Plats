@@ -120,23 +120,29 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
   max-width: 720px;
   margin: 0 auto;
 }
 .hero-field {
   position: relative;
   flex: 1;
-  width: 954px;
+  width: 100%;
+  max-width: 954px;
   height: 72px;
 }
 .search-wrapper {
   position: relative;
-  width: 954px;
+  width: 100%;
+  max-width: 954px;
   height: 72px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 .hero-input {
   width: 100%;
-  padding: 16px 78px 16px 18px; /* room on right for the button */
+  height: 100%;
+  padding: 16px 104px 16px 18px; /* room on right for clear + search buttons */
   border: none;
   border-radius: 12px;
   font-size: 16px;
@@ -149,12 +155,12 @@ body {
 }
 .hero-btn {
   position: absolute;
-  right: 10px;
-  top: 35%;
+  right: 0;
+  top: 50%;
   transform: translateY(-50%);
-  width: 41px;
-  height: 45px;
-  border-radius: 12px;
+  width: 56px;
+  height: 100%;
+  border-radius: 0 12px 12px 0;
   border: 0px solid #fff;
   background: #000;
   display: flex;
@@ -167,7 +173,7 @@ body {
 /* "X" clear button that appears inside the input */
 .hero-clear {
   position: absolute;
-  right: 64px;
+  right: 56px;
   top: 50%;
   transform: translateY(-50%);
   width: 32px;
@@ -194,7 +200,6 @@ body {
 .hero-btn:hover {
   background: #ffcc46;
   border-color: #ffcc46;
-  transform: scale(1.03);
 }
 .hero-btn:hover svg {
   stroke: #111;
@@ -204,17 +209,24 @@ body {
 }
 
 @media (max-width: 720px) {
-  .hero-input {
+  .hero-field,
+  .search-wrapper {
     height: 52px;
-    padding-right: 88px;
+  }
+  .hero-input {
+    padding-right: 96px;
   }
   .hero-btn {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
     width: 52px;
-    height: 52px;
     min-width: 52px;
+    border-radius: 0 12px 12px 0;
   }
   .hero-clear {
-    right: 60px;
+    right: 52px;
   }
 }
 
@@ -223,8 +235,9 @@ body {
 ========================= */
 .controls {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
 }
 .controls .selects {

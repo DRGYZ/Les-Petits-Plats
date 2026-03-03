@@ -42,6 +42,7 @@ const countEl = document.getElementById("results-count");
 const inputEl = document.getElementById("main-search");
 const implEl = document.getElementById("impl"); // may be null
 const heroBtn = document.querySelector(".hero-btn");
+const heroClear = document.querySelector(".hero-clear");
 
 // ---- State ----
 const state = {
@@ -269,7 +270,9 @@ function renderFacetList(type, entries) {
   list.innerHTML = shown
     .map(
       ([norm, label]) =>
-        `<li data-v="${norm}" title="${escapeHTML(label)}">${escapeHTML(
+        `<li data-v="${norm}" role="option" tabindex="0" title="${escapeHTML(
+          label
+        )}">${escapeHTML(
           label
         )}</li>`
     )
@@ -282,6 +285,12 @@ function renderFacetList(type, entries) {
       if (input) input.value = "";
       root.removeAttribute("open");
       applyAll(recipes);
+    });
+    li.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        li.click();
+      }
     });
   });
 
@@ -343,7 +352,7 @@ function applyAll(recipesArr) {
 
 // ---- Init ----
 function init() {
-  if (!Array.isArray(recipes)) {
+  if (typeof recipes === "undefined" || !Array.isArray(recipes)) {
     emptyEl.hidden = false;
     emptyEl.textContent = "Les données n’ont pas été chargées.";
     return;
@@ -367,6 +376,18 @@ function init() {
       applyAll(recipes);
     });
   }
+
+  // dropdown clear buttons
+  document.querySelectorAll(".dropdown").forEach((dropdown) => {
+    const ddInput = dropdown.querySelector(".dd-search");
+    const ddClear = dropdown.querySelector(".dd-clear");
+    if (!ddInput || !ddClear) return;
+    ddClear.addEventListener("click", () => {
+      ddInput.value = "";
+      ddInput.dispatchEvent(new Event("input", { bubbles: true }));
+      ddInput.focus();
+    });
+  });
 
   // main search
   if (inputEl) {
