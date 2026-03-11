@@ -138,8 +138,10 @@ L’approche par boucles reste pertinente si le dataset devient beaucoup plus im
 
 ```
 .
+├── index.html
 ├── public/
-│   └── index.html
+│   └── assets/
+│       └── images/
 ├── src/
 │   ├── app.js
 │   ├── data/
@@ -162,7 +164,7 @@ Il n'y a **aucune installation npm** ni build à exécuter.
 ## Option 1 — VS Code + Live Server
 
 1. Ouvrir le dossier du projet dans **VS Code**
-2. Ouvrir `public/index.html`
+2. Ouvrir `index.html`
 3. Lancer **Open with Live Server**
 
 ---
@@ -178,7 +180,7 @@ python -m http.server 5500
 Puis ouvrir dans le navigateur :
 
 ```
-http://localhost:5500/public/index.html
+http://localhost:5500/index.html
 ```
 
 ---

@@ -97,7 +97,7 @@ function createCard(r) {
   const rawDesc = r.description || "";
   const short = rawDesc.length > 170 ? rawDesc.slice(0, 170) + "…" : rawDesc;
   const desc = escapeHTML(short);
-  const imgPath = r.image ? `assets/images/${r.image}` : "";
+  const imgPath = r.image ? `public/assets/images/${r.image}` : "";
   const ingredients = (r.ingredients || []).slice(0, 4).map((x) => {
     const name = typeof x === "string" ? x : x.ingredient || "";
     const q = typeof x === "string" ? "" : fmtQty(x.quantity);
