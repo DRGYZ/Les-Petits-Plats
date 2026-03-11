@@ -1,107 +1,142 @@
-# Les Petits Plats - Projet 7
+# Les Petits Plats — Projet 7
 
-Application front-end en JavaScript vanilla réalisée dans le cadre du projet **OpenClassrooms - Les Petits Plats**.
+Application front-end réalisée en **JavaScript vanilla** dans le cadre du projet **OpenClassrooms — Les Petits Plats**.
 
-L'objectif du projet est de concevoir un moteur de recherche de recettes **fluide, rapide et maintenable**, puis de comparer **deux implémentations de l'algorithme principal** afin de recommander la plus pertinente.
+L'objectif du projet est de concevoir un **moteur de recherche de recettes fluide, rapide et maintenable**, puis de comparer **deux implémentations algorithmiques** afin de déterminer l'approche la plus pertinente.
 
-## Objectifs du projet
+---
 
-- Intégrer l'interface à partir de la maquette fournie.
-- Implémenter la recherche principale sur les recettes.
-- Implémenter les filtres par tags :
+# Objectifs du projet
+
+- Intégrer l’interface à partir de la maquette fournie
+- Implémenter la **recherche principale** sur les recettes
+- Implémenter des **filtres dynamiques par tags**
   - ingrédients
   - appareils
   - ustensiles
-- Comparer deux approches algorithmiques pour la recherche principale :
-  - **approche fonctionnelle** (`filter`, `map`, `every`)
-  - **approche par boucles natives** (`for`, conditions, `break`)
-- Produire une **fiche d'investigation** avec benchmark et recommandation finale.
 
-## Stack technique
+- Comparer **deux approches algorithmiques** pour la recherche principale
+- Produire une **fiche d’investigation** avec benchmark et recommandation finale
+
+---
+
+# Stack technique
 
 - HTML5
 - CSS3
-- JavaScript vanilla
+- JavaScript (vanilla)
 - Dataset local en JSON (`recipes.js`)
 - Aucun framework JavaScript
 - Aucun build tool
 
-## Fonctionnalites principales
+Le projet fonctionne **entièrement côté client**.
+
+---
+
+# Fonctionnalités principales
 
 - Barre de recherche principale
-- Recherche active a partir de **3 caracteres**
-- Recherche multi-mots (ex. `poulet coco`)
+
+- Recherche active à partir de **3 caractères**
+
+- Recherche multi-mots
+  Exemple : `poulet coco`
+
 - Normalisation du texte :
   - passage en minuscules
   - suppression des accents
-  - nettoyage des caracteres speciaux
-  - suppression des espaces en trop
-- Filtres dynamiques par tags
-- Mise a jour des listes de filtres en fonction des recettes affichees
+  - suppression des caractères spéciaux
+  - nettoyage des espaces
+
+- Filtres dynamiques par tags :
+  - ingrédients
+  - appareils
+  - ustensiles
+
+- Mise à jour dynamique :
+  - des recettes affichées
+  - des listes de filtres
+
 - Affichage du nombre de recettes correspondantes
-- Etat vide si aucune recette ne correspond a la recherche
-- Debounce sur les champs de recherche pour limiter les recalculs inutiles
 
-## Bonnes pratiques appliquees
+- Affichage d’un **état vide** si aucune recette ne correspond
 
-- Decoupage du code en fonctions reutilisables
-- Pre-calcul / cache des blobs de recherche pour limiter les traitements repetitifs
-- Echapper le HTML avant injection dans le DOM pour limiter les risques d'injection
-- Separation claire entre :
+Un **debounce** est appliqué aux champs de recherche afin d’éviter des recalculs inutiles lors de la saisie utilisateur.
+
+---
+
+# Bonnes pratiques appliquées
+
+- Découpage du code en **fonctions réutilisables**
+- Pré-calcul et **cache des blobs de recherche** pour limiter les traitements répétés
+- Échappement du HTML avant injection dans le DOM afin de limiter les risques d’injection
+- Séparation claire entre :
   - utilitaires
   - rendu
   - logique de recherche
   - gestion des filtres
   - initialisation
 
-## Comparaison algorithmique
+---
 
-Deux implementations ont ete etudiees pour la **recherche principale uniquement**.
+# Comparaison algorithmique
 
-### 1) Approche fonctionnelle
+Deux implémentations ont été développées pour la **recherche principale uniquement**.
 
-Utilisation des methodes natives de tableau comme `filter`, `every` et `map`.
+## 1) Approche fonctionnelle
 
-**Avantages :**
+Implémentation utilisant les méthodes natives de tableau :
+
+- `filter`
+- `map`
+- `every`
+
+### Avantages
 
 - code plus lisible
-- plus simple a maintenir
-- plus declaratif
+- plus déclaratif
+- plus facile à maintenir
 
-### 2) Approche par boucles
+---
 
-Utilisation de boucles `for` et d'un `break` anticipe.
+## 2) Approche par boucles natives
 
-**Avantages :**
+Implémentation utilisant :
 
-- leger gain en vitesse brute sur certains cas
-- controle plus fin du parcours
+- `for`
+- conditions
+- `break` anticipé
 
-### Conclusion retenue
+### Avantages
 
-Les benchmarks montrent des performances **tres proches** entre les deux solutions.
+- contrôle plus direct du parcours
+- léger gain en vitesse brute dans certains scénarios
 
-L'approche **fonctionnelle** est recommandee pour ce projet car elle offre le meilleur equilibre entre :
+---
 
-- lisibilite
-- maintenabilite
-- evolutivite
+# Résultats benchmark (résumé)
 
-L'approche par boucles reste pertinente si le dataset grossit fortement et qu'une optimisation micro-performante devient prioritaire.
+Les performances des deux implémentations ont été comparées à l’aide de **jsben.ch**, avec un dataset étendu à **500 recettes**.
 
-## Resultats benchmark (resume)
+Les résultats montrent que :
 
-Tests realises sur **jsben.ch** avec un dataset etendu a **500 recettes**.
+- les **boucles natives** obtiennent généralement les meilleures performances
+- l’écart reste **limité dans la plupart des scénarios**
 
-- Requetes courtes : performances quasi equivalentes
-- Requetes longues : boucles legerement devant
-- Deux mots-cles : fonctionnelle legerement devant
-- Trois mots-cles et plus : boucles legerement devant
-- Aucun resultat : egalite
+Dans ce contexte, l’approche **fonctionnelle** a été retenue pour ce projet car elle offre le meilleur compromis entre :
 
-## Arborescence du projet
+- lisibilité
+- maintenabilité
+- évolutivité
+- performance suffisante pour le volume de données actuel
 
-```text
+L’approche par boucles reste pertinente si le dataset devient beaucoup plus important et qu’une optimisation micro-performante devient nécessaire.
+
+---
+
+# Arborescence du projet
+
+```
 .
 ├── public/
 │   └── index.html
@@ -117,17 +152,22 @@ Tests realises sur **jsben.ch** avec un dataset etendu a **500 recettes**.
 └── benchmark_resultats.pdf
 ```
 
-## Lancer le projet
+---
 
-Le projet est **100% statique**. Il n'y a pas de `npm install` ni de build a executer.
+# Lancer le projet
 
-### Option 1 - VS Code + Live Server
+Le projet est **100% statique**.
+Il n'y a **aucune installation npm** ni build à exécuter.
 
-1. Ouvrir le dossier du projet dans VS Code
+## Option 1 — VS Code + Live Server
+
+1. Ouvrir le dossier du projet dans **VS Code**
 2. Ouvrir `public/index.html`
 3. Lancer **Open with Live Server**
 
-### Option 2 - Serveur local Python
+---
+
+## Option 2 — Serveur local Python
 
 Depuis la racine du projet :
 
@@ -137,26 +177,41 @@ python -m http.server 5500
 
 Puis ouvrir dans le navigateur :
 
-```text
+```
 http://localhost:5500/public/index.html
 ```
 
-## Documents fournis
+---
 
-- **Fiche_investigation_finale.pdf** : document principal de comparaison des deux algorithmes
-- **Fiche_investigation_resume.pdf** : version resumee
-- **benchmark_resultats.pdf** : synthese des mesures de performance
+# Documents fournis
 
-## Note importante sur les images
+- **Fiche_investigation_finale.pdf**
+  Document principal de comparaison des deux algorithmes
 
-Dans certaines archives partagees, le dossier des images peut etre retire pour alleger le poids du projet.
+- **Fiche_investigation_resume.pdf**
+  Version synthétique de la fiche d’investigation
+
+- **benchmark_resultats.pdf**
+  Résumé des mesures de performance réalisées
+
+---
+
+# Note sur les images
+
+Dans certaines archives partagées, le dossier des images peut être retiré afin d’alléger le poids du projet.
 
 Dans ce cas :
 
 - l'application se lance correctement
-- les fonctionnalites JavaScript restent testables
-- les visuels des cartes et de la hero section ne s'affichent pas tant que les images ne sont pas replacees dans `public/assets/images`
+- les fonctionnalités JavaScript restent testables
+- les visuels des cartes et de la section hero ne s'affichent pas tant que les images ne sont pas replacées dans :
 
-## Auteur
+```
+public/assets/images
+```
 
-Projet realise par **Yazan** dans le cadre de la formation OpenClassrooms.
+---
+
+# Auteur
+
+Projet réalisé par **Yazan** dans le cadre de la formation **OpenClassrooms**.
