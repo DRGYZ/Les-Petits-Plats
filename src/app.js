@@ -92,44 +92,59 @@ function fmtQty(q) {
   return q === undefined || q === null ? "" : String(q);
 }
 
+function formatIngredientAmount(item) {
+  if (!item || typeof item === "string") return "";
+
+  const qty = fmtQty(item.quantity);
+  const unit = humanizeUnit(item.unit || item.unite);
+  if (!qty && !unit) return "";
+  if (!qty) return unit;
+  if (!unit) return qty;
+
+  return ["g", "kg", "ml", "cl", "L"].includes(unit)
+    ? `${qty}${unit}`
+    : `${qty} ${unit}`;
+}
+
 function createCard(r) {
   const title = escapeHTML(r.name || r.title || "Recette");
-  const rawDesc = r.description || "";
-  const short = rawDesc.length > 170 ? rawDesc.slice(0, 170) + "…" : rawDesc;
-  const desc = escapeHTML(short);
+  const desc = escapeHTML(r.description || "");
   const imgPath = r.image ? `public/assets/images/${r.image}` : "";
-  const ingredients = (r.ingredients || []).slice(0, 4).map((x) => {
-    const name = typeof x === "string" ? x : x.ingredient || "";
-    const q = typeof x === "string" ? "" : fmtQty(x.quantity);
-    const u = typeof x === "string" ? "" : humanizeUnit(x.unit || x.unite);
-    return [name, q, u].filter(Boolean).join(" ");
-  });
-  const time = r.time ? `${r.time} min` : "";
-  const servings = r.servings ? `${r.servings} pers.` : "";
+  const ingredients = (r.ingredients || [])
+    .map((item) => {
+      const name =
+        typeof item === "string" ? item : (item && item.ingredient) || "";
+      const amount = formatIngredientAmount(item);
+
+      return `
+        <div class="ingredient-item">
+          <div class="ingredient-name">${escapeHTML(name)}</div>
+          <div class="ingredient-qty">${
+            amount ? escapeHTML(amount) : ""
+          }</div>
+        </div>`;
+    })
+    .join("");
+  const time = r.time ? `${r.time}min` : "";
 
   const el = document.createElement("article");
   el.className = "card";
   el.innerHTML = `
-    <img src="${imgPath}" alt="${title}" onerror="this.style.display='none'">
-    <div class="content">
-      <h3>${title}</h3>
-      <div class="meta-row">
-        ${time ? `<span>⏱ ${escapeHTML(time)}</span>` : ""}
-        ${servings ? `<span>🍽 ${escapeHTML(servings)}</span>` : ""}
+    <div class="card-media">
+      <img src="${imgPath}" alt="${title}" onerror="this.style.display='none'">
+      ${time ? `<span class="time-badge">${escapeHTML(time)}</span>` : ""}
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">${title}</h3>
+      <div class="card-section">
+        <p class="card-label">RECETTE</p>
+        <p class="card-description">${desc}</p>
       </div>
-      <p>${desc}</p>
-      <div class="badges">
-        ${ingredients
-          .map((it) => `<span class="badge">${escapeHTML(it)}</span>`)
-          .join("")}
+      <div class="card-section">
+        <p class="card-label">INGRÉDIENTS</p>
+        <div class="ingredients-grid">${ingredients}</div>
       </div>
     </div>`;
-  if (time) {
-    const badge = document.createElement("span");
-    badge.className = "time-badge";
-    badge.textContent = time;
-    el.appendChild(badge);
-  }
   return el;
 }
 

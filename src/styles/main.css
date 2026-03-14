@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;700;800&display=swap");
+
 /* =========================
    VARIABLES + BASE
 ========================= */
@@ -21,6 +23,9 @@
   --search-icon: #6b7280;
   --yellow: #ffcc46;
   --yellow-ink: #1a1a1a;
+  --card-panel: #f6f6f6;
+  --card-shadow: 0 18px 32px rgba(16, 24, 40, 0.08);
+  --card-label: #7a7a7a;
 }
 * {
   box-sizing: border-box;
@@ -477,75 +482,133 @@ body {
    CARDS
 ========================= */
 .card {
-  position: relative;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 320px;
   background: #fff;
   border: 0;
-  border-radius: 20px;
+  border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(16, 24, 40, 0.12);
-  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: var(--card-shadow);
 }
-.card:hover {
-  transform: translateY(-1px);
+.card-media {
+  position: relative;
+  height: 253px;
+  background: #d8d8d8;
 }
-.card img {
+.card-media img {
   width: 100%;
-  aspect-ratio: 4/3;
+  height: 100%;
   object-fit: cover;
   display: block;
-  border-bottom: 1px solid #f0f0f0;
-  background: #e9e9f2;
 }
-.card .content {
-  padding: 16px 18px 18px;
-  display: grid;
-  gap: 8px;
-}
-.card h3 {
-  margin: 0;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.25;
-}
-.card p {
-  margin: 0;
-  color: #667085;
-  font-size: 13px;
-  line-height: 1.5;
-}
-.meta-row {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  font-size: 13px;
-  color: #667085;
-}
-.badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 4px;
-}
-.badge {
-  font-size: 12px;
-  padding: 6px 8px;
-  background: #f7f7fb;
-  border: 1px solid #eee;
-  border-radius: 999px;
-}
-/* time badge */
-.card .time-badge {
+.time-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: var(--chip);
-  color: #111;
-  padding: 4px 8px;
-  font-size: 12px;
+  top: 20px;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 6px 12px;
   border-radius: 999px;
+  background: #ffd15b;
+  color: #1b1b1b;
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+.card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 25px 26px;
+  background: #f8f8f8;
+}
+.card-title {
+  margin: 0;
+  color: #111;
+  font-family: "Anton", "Arial Narrow", sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+.card-section {
+  display: grid;
+  gap: 12px;
+}
+.card-label {
+  margin: 0;
+  color: var(--card-label);
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.card-description {
+  margin: 0;
+  color: #1b1b1b;
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.43;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+.ingredients-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+  row-gap: 18px;
+}
+.ingredient-item {
+  min-width: 0;
+}
+.ingredient-name {
+  color: #1b1b1b;
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.ingredient-qty {
+  min-height: 1.35em;
+  margin-top: 1px;
+  color: var(--card-label);
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+@media (max-width: 720px) {
+  .card-media {
+    height: 228px;
+  }
+  .card-body {
+    gap: 20px;
+    padding: 22px 20px 24px;
+  }
+  .card-title {
+    font-size: 18px;
+  }
+  .card-section {
+    gap: 10px;
+  }
+  .ingredients-grid {
+    column-gap: 18px;
+    row-gap: 14px;
+  }
+  .time-badge {
+    top: 14px;
+    right: 14px;
+  }
 }
 
 /* =========================
