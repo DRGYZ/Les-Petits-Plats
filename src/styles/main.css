@@ -94,15 +94,37 @@ body {
 }
 .logo {
   position: absolute;
-  top: 24px; /* adjust for visual alignment */
-  left: 24px; /* keeps it inside the hero container */
-  font-weight: 800;
-  font-size: 16px;
-  letter-spacing: 0.6px;
+  top: 22px;
+  left: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: #fff;
   text-decoration: none;
-  text-transform: uppercase;
   z-index: 2;
+}
+.logo-wordmark {
+  display: block;
+  font-family: "Anton", "Arial Narrow", sans-serif;
+  font-size: 30px;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.logo-mark {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border: 3px solid #fff;
+  border-radius: 999px;
+}
+.logo-mark::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 2px solid #fff;
+  border-radius: 999px;
 }
 
 /* optional subtle hover */
@@ -141,33 +163,47 @@ body {
   width: 100%;
   max-width: 954px;
   height: 72px;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
 }
 .hero-input {
   width: 100%;
   height: 100%;
-  padding: 16px 104px 16px 18px; /* room on right for clear + search buttons */
+  padding: 16px 134px 16px 18px; /* room on right for clear + search buttons */
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   font-size: 16px;
   background: #fff;
   color: #101828;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+}
+.hero-input::-webkit-search-cancel-button,
+.hero-input::-webkit-search-decoration,
+.hero-input::-webkit-search-results-button,
+.hero-input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+.hero-input::-ms-clear,
+.hero-input::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
 }
 .hero-input:focus-visible {
   outline: 4px solid rgba(255, 204, 70, 0.35);
 }
 .hero-btn {
   position: absolute;
-  right: 0;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  width: 56px;
-  height: 100%;
-  border-radius: 0 12px 12px 0;
-  border: 0px solid #fff;
-  background: #000;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  border: 0;
+  background: #1d1d1d;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,7 +214,7 @@ body {
 /* "X" clear button that appears inside the input */
 .hero-clear {
   position: absolute;
-  right: 56px;
+  right: 72px;
   top: 50%;
   transform: translateY(-50%);
   width: 32px;
@@ -195,9 +231,10 @@ body {
   cursor: pointer;
 }
 .hero-btn svg {
-  width: 27px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   stroke: #fff;
+  stroke-width: 1.8;
   pointer-events: none;
 }
 
@@ -214,24 +251,44 @@ body {
 }
 
 @media (max-width: 720px) {
+  .logo {
+    top: 20px;
+    left: 18px;
+    gap: 8px;
+  }
+  .logo-wordmark {
+    font-size: 22px;
+  }
+  .logo-mark {
+    width: 18px;
+    height: 18px;
+    flex-basis: 18px;
+  }
+  .logo-mark::after {
+    inset: 3px;
+  }
   .hero-field,
   .search-wrapper {
     height: 52px;
   }
   .hero-input {
-    padding-right: 96px;
+    padding-right: 112px;
   }
   .hero-btn {
-    right: 0;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    height: 100%;
-    width: 52px;
-    min-width: 52px;
-    border-radius: 0 12px 12px 0;
+    height: 40px;
+    width: 40px;
+    min-width: 40px;
+    border-radius: 10px;
   }
   .hero-clear {
     right: 52px;
+  }
+  .hero-btn svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
