@@ -40,7 +40,6 @@ const cardsEl = document.getElementById("cards");
 const emptyEl = document.getElementById("empty");
 const countEl = document.getElementById("results-count");
 const inputEl = document.getElementById("main-search");
-const implEl = document.getElementById("impl"); // may be null
 const heroBtn = document.querySelector(".hero-btn");
 const heroClear = document.querySelector(".hero-clear");
 
@@ -159,7 +158,7 @@ function render(list) {
     }`;
 }
 
-// ---- Search implementations ----
+// ---- Search implementation ----
 function buildBlob(r) {
   const name = r.name || r.title || "";
   const desc = r.description || "";
@@ -169,11 +168,6 @@ function buildBlob(r) {
   const appliance = r.appliance || "";
   const ustensils = Array.isArray(r.ustensils) ? r.ustensils.join(" ") : "";
   return normalize(`${name} ${desc} ${ingreds} ${appliance} ${ustensils}`);
-}
-function searchFunctional(arr, q) {
-  const tokens = tokenize(q);
-  if (tokens.length < 1) return arr;
-  return arr.filter((r) => tokens.every((t) => getBlob(r).includes(t)));
 }
 function searchLoops(arr, q) {
   const tokens = tokenize(q);
@@ -193,7 +187,6 @@ function searchLoops(arr, q) {
   }
   return out;
 }
-let SEARCH_IMPL = searchFunctional;
 
 // ---- Facets + tags ----
 function collectFacets(list) {
@@ -231,7 +224,7 @@ function renderActiveTags() {
 
   const baseList =
     state.query && state.query.length >= 3
-      ? SEARCH_IMPL(recipes, state.query)
+      ? searchLoops(recipes, state.query)
       : recipes;
   const facets = collectFacets(baseList);
   const labelOf = (type, norm) => {
@@ -318,7 +311,7 @@ function applyAll(recipesArr) {
   // Query filter (≥ 3 chars)
   const base =
     state.query && state.query.length >= 3
-      ? SEARCH_IMPL(recipesArr, state.query)
+      ? searchLoops(recipesArr, state.query)
       : recipesArr;
 
   // Tag filters (AND)
@@ -383,14 +376,6 @@ function init() {
   renderFacetList("appliances", f0.appliances);
   renderFacetList("ustensils", f0.ustensils);
   renderActiveTags();
-
-  // algorithm switch (guard if the select isn't present)
-  if (implEl) {
-    implEl.addEventListener("change", () => {
-      SEARCH_IMPL = implEl.value === "loops" ? searchLoops : searchFunctional;
-      applyAll(recipes);
-    });
-  }
 
   // dropdown clear buttons
   document.querySelectorAll(".dropdown").forEach((dropdown) => {
