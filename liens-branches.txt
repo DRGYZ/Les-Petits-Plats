@@ -1,0 +1,8 @@
+Main repository URL:
+https://github.com/DRGYZ/Les-Petits-Plats
+
+search-functional branch URL:
+https://github.com/DRGYZ/Les-Petits-Plats/tree/search-functional
+
+search-loops branch URL:
+https://github.com/DRGYZ/Les-Petits-Plats/tree/search-loops
