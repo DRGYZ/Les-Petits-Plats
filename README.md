@@ -1,6 +1,6 @@
 # Les Petits Plats — Projet 7
 
-Application front-end réalisée en **JavaScript vanilla** dans le cadre du projet **OpenClassrooms — Les Petits Plats**.
+Application front-end réalisée en **JavaScript vanilla** dans le cadre du projet **OpenClassrooms — Les Petits Plats** (interface **Atelier Ardoise & Citron** sur `codex/les-petits-plats-redesign`).
 
 L'objectif du projet est de concevoir un **moteur de recherche de recettes fluide, rapide et maintenable**, puis de comparer **deux implémentations algorithmiques** afin de déterminer l'approche la plus pertinente.
 
@@ -8,14 +8,14 @@ L'objectif du projet est de concevoir un **moteur de recherche de recettes fluid
 
 # Objectifs du projet
 
-- Intégrer l’interface à partir de la maquette fournie
+- Intégrer une interface décisionnelle rapide (accès direct aux ingrédients du placard, filtres par tags et comparateur de recettes sur ordinateur et mobile)
 - Implémenter la **recherche principale** sur les recettes
 - Implémenter des **filtres dynamiques par tags**
   - ingrédients
   - appareils
   - ustensiles
 
-- Comparer **deux approches algorithmiques** pour la recherche principale
+- Comparer **deux approches algorithmiques** pour la recherche principale (`searchFunctional` et `searchLoops`)
 - Produire une **fiche d’investigation** avec benchmark et recommandation finale
 
 ---
@@ -23,9 +23,10 @@ L'objectif du projet est de concevoir un **moteur de recherche de recettes fluid
 # Stack technique
 
 - HTML5
-- CSS3
+- CSS3 (responsive desktop `1440px` et mobile `390px`)
 - JavaScript (vanilla)
 - Dataset local en JSON (`recipes.js`)
+- Images JPEG optimisées (`public/assets/images`, ~255 MiB réduits à ~4,0 MiB) avec chargement différé (`loading="lazy"`) sous la ligne de flottaison
 - Aucun framework JavaScript
 - Aucun build tool
 
