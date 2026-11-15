@@ -1,6 +1,8 @@
 # Les Petits Plats — Projet 7
 
-Application front-end réalisée en **JavaScript vanilla** dans le cadre du projet **OpenClassrooms — Les Petits Plats** (interface **Atelier Ardoise & Citron** sur `codex/les-petits-plats-redesign`).
+Application front-end réalisée en **JavaScript vanilla** dans le cadre du projet **OpenClassrooms — Les Petits Plats**, avec l’interface **Atelier Ardoise & Citron**.
+
+[Voir la démo sur GitHub Pages](https://drgyz.github.io/Les-Petits-Plats/)
 
 L'objectif du projet est de concevoir un **moteur de recherche de recettes fluide, rapide et maintenable**, puis de comparer **deux implémentations algorithmiques** afin de déterminer l'approche la plus pertinente.
 
