@@ -554,9 +554,11 @@ function updateSearchStatus() {
 
   statusEl.className = "search-status";
   const tokens = tokenize(trimmed);
-  if (tokens.length > 1 && tokens.includes("coco")) {
-    const cocoCount = SEARCH_IMPL(recipes, "coco").length;
-    statusEl.innerHTML = `<span>Recherche sans accents par plat, ingrédient ou appareil.</span><button type="button" class="broaden-btn" id="broaden-coco-btn">Voir aussi « coco » (${cocoCount} recettes)</button>`;
+  const cocoCount = tokens.length > 1 && tokens.includes("coco")
+    ? runFilterPipeline(recipes, "coco", state.selected).length
+    : 0;
+  if (cocoCount > 0) {
+    statusEl.innerHTML = `<span>Recherche active dès 3 caractères, sans accents.</span><button type="button" class="broaden-btn" id="broaden-coco-btn">Voir aussi « coco » (${cocoCount} recette${cocoCount > 1 ? "s" : ""})</button>`;
     const broadenBtn = document.getElementById("broaden-coco-btn");
     if (broadenBtn) {
       broadenBtn.addEventListener("click", () => setSearchQuery("coco"));
@@ -818,7 +820,7 @@ function applyAll(recipesArr) {
   const filtered = runFilterPipeline(recipesArr, state.query, state.selected);
   const elapsed = performance.now() - t0;
 
-  if (perfEl) perfEl.textContent = `${elapsed.toFixed(2)} ms`;
+  if (perfEl) perfEl.textContent = `Filtrage · ${elapsed.toFixed(2)} ms`;
   updateSearchStatus();
   renderQuickPantry();
   renderComparison();

@@ -4,13 +4,13 @@ Application front-end réalisée en **JavaScript vanilla** dans le cadre du proj
 
 [Voir la démo sur GitHub Pages](https://drgyz.github.io/Les-Petits-Plats/)
 
-L'objectif du projet est de concevoir un **moteur de recherche de recettes fluide, rapide et maintenable**, puis de comparer **deux implémentations algorithmiques** afin de déterminer l'approche la plus pertinente.
+Le projet compare **deux implémentations de la même recherche** sur un jeu de 50 recettes. Dans la démo, le sélecteur **Moteur JS** permet de changer d’implémentation en conservant la requête et les filtres actifs.
 
 ---
 
 # Objectifs du projet
 
-- Intégrer une interface décisionnelle rapide (accès direct aux ingrédients du placard, filtres par tags et comparateur de recettes sur ordinateur et mobile)
+- Intégrer une interface de recherche avec ingrédients du placard, filtres par tags et comparateur de recettes sur ordinateur et mobile
 - Implémenter la **recherche principale** sur les recettes
 - Implémenter des **filtres dynamiques par tags**
   - ingrédients
@@ -25,10 +25,10 @@ L'objectif du projet est de concevoir un **moteur de recherche de recettes fluid
 # Stack technique
 
 - HTML5
-- CSS3 (responsive desktop `1440px` et mobile `390px`)
+- CSS3 (interface adaptative sur ordinateur et mobile)
 - JavaScript (vanilla)
-- Dataset local en JSON (`recipes.js`)
-- Images JPEG optimisées (`public/assets/images`, ~255 MiB réduits à ~4,0 MiB) avec chargement différé (`loading="lazy"`) sous la ligne de flottaison
+- Jeu de 50 recettes dans un tableau JavaScript local (`src/data/recipes.js`)
+- Images JPEG dans `public/assets/images`, avec chargement différé des images après les trois premières cartes
 - Aucun framework JavaScript
 - Aucun build tool
 
@@ -42,8 +42,7 @@ Le projet fonctionne **entièrement côté client**.
 
 - Recherche active à partir de **3 caractères**
 
-- Recherche multi-mots
-  Exemple : `poulet coco`
+- Recherche multi-mots (`poulet coco`). Chaque mot doit apparaître dans le texte indexé de la recette, qui regroupe le nom, la description, les ingrédients, l’appareil et les ustensiles.
 
 - Normalisation du texte :
   - passage en minuscules
@@ -63,6 +62,8 @@ Le projet fonctionne **entièrement côté client**.
 - Affichage du nombre de recettes correspondantes
 
 - Affichage d’un **état vide** si aucune recette ne correspond
+
+- Le raccourci **Voir aussi « coco »** conserve les filtres actifs et indique le nombre de recettes disponibles après élargissement. Dans l’état vide, **Toutes les recettes « coco »** efface les filtres pour afficher les résultats de cette recherche sur l’ensemble du jeu de données.
 
 Un **debounce** est appliqué aux champs de recherche afin d’éviter des recalculs inutiles lors de la saisie utilisateur.
 
@@ -88,52 +89,29 @@ Deux implémentations ont été développées pour la **recherche principale uni
 
 ## 1) Approche fonctionnelle
 
-Implémentation utilisant les méthodes natives de tableau :
-
-- `filter`
-- `map`
-- `every`
-
-### Avantages
-
-- code plus lisible
-- plus déclaratif
-- plus facile à maintenir
+`searchFunctional` utilise `filter` et `every` pour exprimer directement la condition de recherche. C’est le moteur sélectionné au chargement.
 
 ---
 
 ## 2) Approche par boucles natives
 
-Implémentation utilisant :
-
-- `for`
-- conditions
-- `break` anticipé
-
-### Avantages
-
-- contrôle plus direct du parcours
-- léger gain en vitesse brute dans certains scénarios
+`searchLoops` utilise des boucles `for` et un `break` dès qu’un mot ne correspond pas. Les deux moteurs parcourent les recettes dans l’ordre du jeu de données et utilisent le même texte normalisé et le même filtrage par tags.
 
 ---
 
-# Résultats benchmark (résumé)
+# Vérifier les résultats et lire le temps de filtrage
 
-Les performances des deux implémentations ont été comparées à l’aide de **jsben.ch**, avec un dataset étendu à **500 recettes**.
+Le test compare les identifiants ordonnés renvoyés par les deux moteurs sur les 50 recettes du dépôt. Il couvre les accents, les recherches multi-mots, les trois types de filtres, les recherches vides et les recherches sans résultat. Il vérifie aussi le compteur du raccourci « coco ».
 
-Les résultats montrent que :
+```bash
+node --test tests/search.test.mjs
+```
 
-- les **boucles natives** obtiennent généralement les meilleures performances
-- l’écart reste **limité dans la plupart des scénarios**
+Node.js 20 ou supérieur suffit pour lancer ce contrôle depuis la racine du dépôt, sans installation de dépendances.
 
-Dans ce contexte, l’approche **fonctionnelle** a été retenue pour ce projet car elle offre le meilleur compromis entre :
+L’indicateur **Filtrage** affiche la durée d’une seule exécution de la recherche et des filtres sélectionnés. L’index est préparé au chargement. Le calcul des options de filtres et des suggestions, le rendu des cartes et le délai de saisie sont hors mesure. Le navigateur, le cache et l’échauffement du moteur JavaScript peuvent faire varier la valeur affichée.
 
-- lisibilité
-- maintenabilité
-- évolutivité
-- performance suffisante pour le volume de données actuel
-
-L’approche par boucles reste pertinente si le dataset devient beaucoup plus important et qu’une optimisation micro-performante devient nécessaire.
+Le [résumé du benchmark de formation](benchmark_resultats.pdf) est conservé comme livrable historique. La démo affiche des mesures ponctuelles et le test ci-dessus vérifie l’équivalence des résultats.
 
 ---
 
@@ -151,6 +129,8 @@ L’approche par boucles reste pertinente si le dataset devient beaucoup plus im
 │   │   └── recipes.js
 │   └── styles/
 │       └── main.css
+├── tests/
+│   └── search.test.mjs
 ├── README.md
 ├── Fiche_investigation_finale.pdf
 ├── Fiche_investigation_resume.pdf
